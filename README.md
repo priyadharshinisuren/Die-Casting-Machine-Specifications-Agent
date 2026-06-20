@@ -1,4 +1,4 @@
-AI Agents: Intensive Vibe Coding Capstone Project
+AI Agents: Intensive Vibe Coding Capstone Project 
 # Die-Casting-Machine-Specifications-Agent
 create agent below i have cylinder selection calculation sheet and it contains die-casting machines specifications. once i give specifications, It will shown its answer (web app)
 Key Features
@@ -19,3 +19,6 @@ Reset Button — clears all inputs instantly
 Enter your die-casting specs (casting area, plunger diameter, shot weight, etc.) and click Calculate Results — the app instantly shows all computed values with status indicators (✅ Optimal / ⚠️ Warning / 🔴 Danger).
 output:Double-click on 
 index.html
+
+requirement:Antigravity 2.0
+            Antigravity IDE
