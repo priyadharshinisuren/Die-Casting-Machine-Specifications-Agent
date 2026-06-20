@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Die-Casting Machine Cylinder Selection Calculator - Professional tool for calculating optimal cylinder specifications for die-casting machines.">
+    <title>Die-Casting Cylinder Selection Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="bg-orb bg-orb-1"></div>
+        <div class="bg-orb bg-orb-2"></div>
+        <div class="bg-orb bg-orb-3"></div>
+    </div>
+
+    <!-- Header -->
+    <header id="app-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                        <circle cx="18" cy="18" r="16" stroke="url(#logoGrad)" stroke-width="2.5"/>
+                        <rect x="10" y="8" width="16" height="20" rx="3" stroke="url(#logoGrad)" stroke-width="2"/>
+                        <line x1="13" y1="14" x2="23" y2="14" stroke="url(#logoGrad)" stroke-width="1.5"/>
+                        <line x1="13" y1="18" x2="23" y2="18" stroke="url(#logoGrad)" stroke-width="1.5"/>
+                        <line x1="13" y1="22" x2="23" y2="22" stroke="url(#logoGrad)" stroke-width="1.5"/>
+                        <defs>
+                            <linearGradient id="logoGrad" x1="0" y1="0" x2="36" y2="36">
+                                <stop stop-color="#60a5fa"/>
+                                <stop offset="1" stop-color="#a78bfa"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div>
+                    <h1>Cylinder Selection Calculator</h1>
+                    <p class="subtitle">Die-Casting Machine Specifications Agent</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="resetBtn" class="btn btn-ghost" onclick="resetAll()">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8a6 6 0 1 1 1.76 4.24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M2 4v4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Reset
+                </button>
+                <button id="printBtn" class="btn btn-primary-outline" onclick="window.print()">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 6V2h8v4M4 12H2.5A1.5 1.5 0 0 1 1 10.5v-3A1.5 1.5 0 0 1 2.5 6h11A1.5 1.5 0 0 1 15 7.5v3a1.5 1.5 0 0 1-1.5 1.5H12" stroke="currentColor" stroke-width="1.3"/><rect x="4" y="10" width="8" height="4" rx="0.5" stroke="currentColor" stroke-width="1.3"/></svg>
+                    Print
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="app-main">
+        <!-- Machine Preset Selection -->
+        <section class="card preset-card animate-in" id="preset-section">
+            <div class="card-header">
+                <div class="card-icon blue">
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M7 8h8M7 11h8M7 14h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </div>
+                <div>
+                    <h2>Machine Specifications Input</h2>
+                    <p>Enter your die-casting machine parameters below</p>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- Material Selection -->
+                <div class="input-group-row">
+                    <div class="input-group">
+                        <label for="material">Casting Material</label>
+                        <select id="material" onchange="calculate()">
+                            <option value="aluminum">Aluminum (Al)</option>
+                            <option value="zinc">Zinc (Zn)</option>
+                            <option value="magnesium">Magnesium (Mg)</option>
+                            <option value="copper">Copper (Cu)</option>
+                            <option value="lead">Lead (Pb)</option>
+                            <option value="tin">Tin (Sn)</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="machineType">Machine Type</label>
+                        <select id="machineType" onchange="calculate()">
+                            <option value="coldChamber">Cold Chamber</option>
+                            <option value="hotChamber">Hot Chamber</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="section-divider">
+                    <span>Casting Parameters</span>
+                </div>
+
+                <div class="input-group-row">
+                    <div class="input-group">
+                        <label for="castingArea">Casting Projected Area <span class="unit">(cm²)</span></label>
+                        <input type="number" id="castingArea" placeholder="e.g. 150" step="0.1" oninput="calculate()">
+                    </div>
+                    <div class="input-group">
+                        <label for="numCavities">Number of Cavities</label>
+                        <input type="number" id="numCavities" placeholder="e.g. 2" value="1" min="1" oninput="calculate()">
+                    </div>
+                </div>
+
+                <div class="input-group-row">
+                    <div class="input-group">
+                        <label for="runnerArea">Runner & Overflow Area <span class="unit">(cm²)</span></label>
+                        <input type="number" id="runnerArea" placeholder="e.g. 50" step="0.1" oninput="calculate()">
+                    </div>
+                    <div class="input-group">
+                        <label for="shotWeight">Shot Weight (Total) <span class="unit">(grams)</span></label>
+                        <input type="number" id="shotWeight" placeholder="e.g. 500" step="0.1" oninput="calculate()">
+                    </div>
+                </div>
+
+                <div class="section-divider">
+                    <span>Cylinder / Plunger Details</span>
+                </div>
+
+                <div class="input-group-row">
+                    <div class="input-group">
+                        <label for="plungerDiameter">Plunger Diameter <span class="unit">(mm)</span></label>
+                        <input type="number" id="plungerDiameter" placeholder="e.g. 60" step="0.1" oninput="calculate()">
+                    </div>
+                    <div class="input-group">
+                        <label for="plungerStroke">Plunger Stroke <span class="unit">(mm)</span></label>
+                        <input type="number" id="plungerStroke" placeholder="e.g. 300" step="0.1" oninput="calculate()">
+                    </div>
+                </div>
+
+                <div class="input-group-row">
+                    <div class="input-group">
+                        <label for="hydraulicPressure">Hydraulic Pressure <span class="unit">(kg/cm²)</span></label>
+                        <input type="number" id="hydraulicPressure" placeholder="e.g. 140" step="0.1" oninput="calculate()">
+                    </div>
+                    <div class="input-group">
+                        <label for="intensificationRatio">Intensification Ratio</label>
+                        <input type="number" id="intensificationRatio" placeholder="e.g. 10" step="0.1" value="10" oninput="calculate()">
+                    </div>
+                </div>
+
+                <div class="section-divider">
+                    <span>Injection Parameters</span>
+                </div>
+
+                <div class="input-group-row">
+                    <div class="input-group">
+                        <label for="gateArea">Gate Area <span class="unit">(mm²)</span></label>
+                        <input type="number" id="gateArea" placeholder="e.g. 80" step="0.1" oninput="calculate()">
+                    </div>
+                    <div class="input-group">
+                        <label for="fillTime">Desired Fill Time <span class="unit">(seconds)</span></label>
+                        <input type="number" id="fillTime" placeholder="e.g. 0.05" step="0.001" oninput="calculate()">
+                    </div>
+                </div>
+
+                <div class="input-group-row">
+                    <div class="input-group">
+                        <label for="specificPressure">Required Specific Pressure <span class="unit">(kg/cm²)</span></label>
+                        <input type="number" id="specificPressure" placeholder="e.g. 400" step="1" oninput="calculate()">
+                    </div>
+                    <div class="input-group">
+                        <label for="safetyFactor">Safety Factor</label>
+                        <input type="number" id="safetyFactor" placeholder="e.g. 1.2" step="0.05" value="1.2" oninput="calculate()">
+                    </div>
+                </div>
+
+                <!-- Calculate Button -->
+                <button id="calcBtn" class="btn btn-primary btn-large" onclick="calculate()">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 3h10a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z" stroke="currentColor" stroke-width="1.5"/><path d="M7 7h6M7 10h6M7 13h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                    Calculate Results
+                </button>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="card results-card animate-in" id="results-section" style="display:none;">
+            <div class="card-header">
+                <div class="card-icon green">
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M9 11l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.8"/></svg>
+                </div>
+                <div>
+                    <h2>Calculation Results</h2>
+                    <p>Based on your input specifications</p>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- Summary Cards -->
+                <div class="result-summary-grid" id="summaryGrid">
+                    <!-- Populated by JS -->
+                </div>
+
+                <!-- Detailed Results -->
+                <div class="section-divider"><span>Detailed Calculations</span></div>
+                <div class="results-table-container">
+                    <table class="results-table" id="resultsTable">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Value</th>
+                                <th>Unit</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsBody">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Machine Recommendation -->
+                <div class="section-divider"><span>Machine Recommendation</span></div>
+                <div class="recommendation-box" id="recommendationBox">
+                    <!-- Populated by JS -->
+                </div>
+
+                <!-- Visual Gauge -->
+                <div class="section-divider"><span>Fill Ratio Indicator</span></div>
+                <div class="gauge-container" id="gaugeContainer">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Reference -->
+        <section class="card reference-card animate-in" id="reference-section">
+            <div class="card-header">
+                <div class="card-icon purple">
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 4h5v5H4zM13 4h5v5h-5zM4 13h5v5H4zM13 13h5v5h-5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+                </div>
+                <div>
+                    <h2>Material Properties Reference</h2>
+                    <p>Standard die-casting material data</p>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="results-table-container">
+                    <table class="results-table reference-table">
+                        <thead>
+                            <tr>
+                                <th>Material</th>
+                                <th>Density (g/cm³)</th>
+                                <th>Melting Point (°C)</th>
+                                <th>Pouring Temp (°C)</th>
+                                <th>Spec. Pressure (kg/cm²)</th>
+                                <th>Machine Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><span class="material-badge al">Al</span> Aluminum</td><td>2.70</td><td>660</td><td>640–710</td><td>300–600</td><td>Cold Chamber</td></tr>
+                            <tr><td><span class="material-badge zn">Zn</span> Zinc</td><td>6.60</td><td>419</td><td>400–430</td><td>150–350</td><td>Hot Chamber</td></tr>
+                            <tr><td><span class="material-badge mg">Mg</span> Magnesium</td><td>1.74</td><td>650</td><td>640–700</td><td>300–500</td><td>Cold / Hot Chamber</td></tr>
+                            <tr><td><span class="material-badge cu">Cu</span> Copper</td><td>8.96</td><td>1085</td><td>950–1050</td><td>400–700</td><td>Cold Chamber</td></tr>
+                            <tr><td><span class="material-badge pb">Pb</span> Lead</td><td>11.34</td><td>327</td><td>300–350</td><td>100–250</td><td>Hot Chamber</td></tr>
+                            <tr><td><span class="material-badge sn">Sn</span> Tin</td><td>7.30</td><td>232</td><td>240–280</td><td>100–200</td><td>Hot Chamber</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Standard Machine Tonnage Reference -->
+        <section class="card reference-card animate-in" id="tonnage-section">
+            <div class="card-header">
+                <div class="card-icon orange">
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 3v16M3 11h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.8"/></svg>
+                </div>
+                <div>
+                    <h2>Standard Machine Tonnage</h2>
+                    <p>Common die-casting machine clamping force ratings</p>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="tonnage-chips" id="tonnageChips">
+                    <span class="tonnage-chip">80T</span>
+                    <span class="tonnage-chip">125T</span>
+                    <span class="tonnage-chip">160T</span>
+                    <span class="tonnage-chip">200T</span>
+                    <span class="tonnage-chip">250T</span>
+                    <span class="tonnage-chip">280T</span>
+                    <span class="tonnage-chip">350T</span>
+                    <span class="tonnage-chip">400T</span>
+                    <span class="tonnage-chip">500T</span>
+                    <span class="tonnage-chip">630T</span>
+                    <span class="tonnage-chip">800T</span>
+                    <span class="tonnage-chip">1000T</span>
+                    <span class="tonnage-chip">1250T</span>
+                    <span class="tonnage-chip">1600T</span>
+                    <span class="tonnage-chip">2000T</span>
+                    <span class="tonnage-chip">2500T</span>
+                    <span class="tonnage-chip">3000T</span>
+                    <span class="tonnage-chip">4000T</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="app-footer">
+        <p>Die-Casting Cylinder Selection Calculator &copy; 2026 &mdash; Professional Engineering Tool</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
