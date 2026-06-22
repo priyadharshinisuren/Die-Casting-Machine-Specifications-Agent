@@ -22,3 +22,5 @@ index.html
 
 requirement:Antigravity 2.0
             Antigravity IDE
+            Antigravity CLI
+            
