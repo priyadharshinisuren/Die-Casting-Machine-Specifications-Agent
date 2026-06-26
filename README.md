@@ -17,7 +17,7 @@ Print-Ready — clean print layout for documentation
 Reset Button — clears all inputs instantly
 🧪 How to Use
 Enter your die-casting specs (casting area, plunger diameter, shot weight, etc.) and click Calculate Results — the app instantly shows all computed values with status indicators (✅ Optimal / ⚠️ Warning / 🔴 Danger).
-output:Double-click on 
+output:https://www.youtube.com/watch?v=prqy3VCxUBY
 index.html
 
 requirement:Antigravity 2.0
